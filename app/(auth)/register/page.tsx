@@ -1,9 +1,38 @@
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import AuthForm, { Field } from "@/components/auth-form"
 import Link from "next/link"
+import { signUp } from "@/lib/auth-client"
 
 //
 
 export default function RegisterPage() {
+    const router = useRouter()
+    const [error, setError] = useState<string | null>(null)
+
+    async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+        event.preventDefault()
+        setError(null)
+
+        const formData = new FormData(event.currentTarget)
+        const res = await signUp.email({
+            name: formData.get("email") as string, 
+            email: formData.get("email") as string, 
+            password: formData.get("password") as string, 
+        })
+
+
+        if (res.error) {
+            setError(res.error.message || "Network error occured.")
+        }
+        else {
+            router.push("/register")
+        }
+    }
+
+
     return (
         <>
             <h2 className="font-serif text-5xl">
@@ -11,10 +40,10 @@ export default function RegisterPage() {
             </h2>
 
             <p className="mt-2 text-sm text-foreground/60">
-                Save your favourite stays and book faster.
+                List your property instantly.
             </p>
 
-            <AuthForm submitLabel="REGISTER">
+            <AuthForm submitLabel="REGISTER" onSubmit={handleSubmit}>
                 <Field 
                     label="EMAIL" 
                     name="email" 
@@ -39,9 +68,13 @@ export default function RegisterPage() {
                 />
             </AuthForm>
 
-            <p className="mt-8 text-sm text-foreground/60">
-                Already have an account?{" "}
+            {error && (
+                <p className="mt-4 text-red-500">
+                    {error}
+                </p>
+            )}
 
+            <p className="mt-4 text-sm text-foreground/60">
                 <Link href="/login" className="text-foreground underline underline-offset-4">
                     Log in
                 </Link>

@@ -1,8 +1,11 @@
+"use client"
+
 import Link from "next/link"
+import { signOut } from "@/lib/auth-client"
 
 //
 
-export default function TopBar() {
+export default function TopBar({ signedIn }: { signedIn: boolean }) {
     return (
         <header className="flex h-20 w-full items-center justify-between bg-background px-4 sm:px-8 text-black">
             <Link href="/" className="text-center">
@@ -16,13 +19,23 @@ export default function TopBar() {
             </Link>
 
             <div className="flex gap-2 sm:gap-5 text-center">
-                <Link href="/register" className="button">
-                    REGISTER
-                </Link>
+                {!signedIn ? (
+                    <>
+                        <Link href="/register" className="button">
+                            REGISTER
+                        </Link>
 
-                <Link href="/login" className="button">
-                    LOGIN
-                </Link>
+                        <Link href="/login" className="button">
+                            LOGIN
+                        </Link>
+                    </>
+                ): (
+                    <>
+                        <button className="button" onClick={() => signOut()}>
+                            LOGOUT
+                        </button>
+                    </>
+                )}
             </div>
         </header>
     )

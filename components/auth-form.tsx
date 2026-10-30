@@ -1,11 +1,21 @@
 "use client"
 
-import type { ComponentProps, ReactNode } from "react"
+import type { ComponentProps } from "react"
 
-// Front end only for now: block submission until auth is wired up.
-export default function AuthForm({ submitLabel, children }: { submitLabel: string, children: ReactNode }) {
+//
+
+export default function AuthForm(
+{ 
+    submitLabel, 
+    children, 
+    onSubmit 
+}: { 
+    submitLabel: string, 
+    children: React.ReactNode, 
+    onSubmit: (event: React.SubmitEvent<HTMLFormElement>) => Promise<void> 
+}) {
     return (
-        <form onSubmit={(e) => e.preventDefault()} className="mt-10 flex flex-col gap-6">
+        <form onSubmit={(e) => onSubmit(e)} className="mt-10 flex flex-col gap-6">
             {children}
 
             <button
@@ -17,6 +27,7 @@ export default function AuthForm({ submitLabel, children }: { submitLabel: strin
         </form>
     )
 }
+
 
 export function Field({ label, ...props }: { label: string } & ComponentProps<"input">) {
     return (
