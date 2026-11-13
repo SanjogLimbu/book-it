@@ -5,7 +5,7 @@ import TopBar from "@/components/topbar"
 import { featuredHotels } from "@/lib/hotels"
 import hero from "@/public/images/hero.jpg"
 import Image from "next/image"
-import { useSession, signOut } from "@/lib/auth-client"
+import { useSession } from "@/lib/auth-client"
 
 //
 

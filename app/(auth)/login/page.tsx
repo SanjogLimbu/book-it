@@ -22,12 +22,12 @@ export default function LoginPage() {
             password: formData.get("password") as string, 
         })
 
-        
+
         if (res.error) {
             setError(res.error.message || "A network error occured.")
         } 
         else {
-            router.push("/")
+            router.push("/dashboard")
         } 
     }
 

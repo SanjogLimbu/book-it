@@ -32,7 +32,10 @@ export default function AuthForm(
 export function Field({ label, ...props }: { label: string } & ComponentProps<"input">) {
     return (
         <label className="flex flex-col gap-2">
-            <span className="text-[11px] tracking-[0.2em] text-foreground/50">{label}</span>
+            <span className="text-[11px] tracking-[0.2em] text-foreground/50">
+                {label}
+            </span>
+
             <input
                 required
                 className="border-b border-foreground/30 bg-transparent pb-2 font-serif text-lg outline-none transition-colors focus:border-foreground"
